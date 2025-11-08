@@ -264,25 +264,25 @@ export default function App() {
               I'm <span className="bg-clip-text text-transparent bg-gradient-to-r from-fuchsia-400 to-cyan-300 drop-shadow-[0_0_25px_rgba(168,85,247,0.5)] hover:drop-shadow-[0_0_35px_rgba(168,85,247,0.8)] transition-all duration-300">Abhishek</span>..<span className="animate-blink">.</span>
             </h2>
 
-            <div className={`mt-6 text-lg leading-relaxed space-y-4 ${isDark ? 'text-white/80' : 'text-gray-700'}`}>
+            <div className={`mt-8 text-[1.125rem] leading-[1.8] space-y-5 max-w-4xl ${isDark ? 'text-white/85' : 'text-gray-700'}`}>
               <p className="text-anim cursor-pointer">
-                I'm an <span className="font-semibold text-transparent bg-clip-text bg-gradient-to-r from-fuchsia-400 to-cyan-300">AI Enhanced Full-stack developer</span> and founder, currently building <a href="https://gamegrid.com" className="text-cyan-400 hover:text-cyan-300 transition-colors">GameGrid</a> — India's first <span className="font-semibold">esports performance analytics</span> platform. I design scalable systems, build real-time data pipelines, and ship products fast with AI-assisted workflows.
+                I'm an <span className="font-semibold text-transparent bg-clip-text bg-gradient-to-r from-fuchsia-400 to-cyan-300">AI Enhanced Full-stack developer</span> and founder, currently building <a href="https://gamegrid.com" target="_blank" rel="noopener noreferrer" className="text-cyan-400 hover:text-cyan-300 transition-colors underline decoration-cyan-400/30 hover:decoration-cyan-400">GameGrid</a> — India's first <span className="font-semibold text-white">esports performance analytics</span> platform. I design <span className="text-white font-medium">scalable systems</span>, build <span className="text-white font-medium">real-time data pipelines</span>, and ship products fast with <span className="text-white font-medium">AI-assisted workflows</span>.
               </p>
               
               <p className="text-anim cursor-pointer">
-                My work blends <span className="font-semibold">AI</span>, <span className="font-semibold">UI/UX design</span>, and <span className="font-semibold">data engineering</span>. I'm constantly exploring how AI can <a href="#" className="text-cyan-400 hover:text-cyan-300 transition-colors">accelerate development cycles</a>, optimize user experiences, and turn ideas into production-grade products.
+                My work blends <span className="text-white font-semibold">AI</span>, <span className="text-white font-semibold">UI/UX design</span>, and <span className="text-white font-semibold">data engineering</span>. I'm constantly exploring how AI can <span className="text-cyan-400 font-medium">accelerate development cycles</span>, optimize user experiences, and turn ideas into <span className="text-white font-medium">production-grade products</span>.
               </p>
               
               <p className="text-anim cursor-pointer">
-                I love <span className="font-semibold">building at speed</span>, experimenting with <span className="font-semibold">AI-driven workflows</span>, and solving <span className="font-semibold">high-pressure problems</span> in both tech and esports. Whether it's architecting scalable backends or refining <a href="#" className="text-cyan-400 hover:text-cyan-300 transition-colors">pixel-perfect interfaces</a>, I enjoy the challenge of creating systems that perform under pressure.
+                I love <span className="text-white font-semibold">building at speed</span>, experimenting with <span className="text-white font-semibold">AI-driven workflows</span>, and solving <span className="text-white font-semibold">high-pressure problems</span> in both tech and esports. Whether it's architecting scalable backends or refining <span className="text-cyan-400 font-medium">pixel-perfect interfaces</span>, I enjoy the challenge of creating systems that <span className="text-white font-medium">perform under pressure</span>.
               </p>
               
               <p className="text-anim cursor-pointer">
-                Beyond development, I've <span className="font-semibold">led esports teams</span> in national tournaments, managed competitive rosters, and built communities around gaming and strategy. This combination of technical expertise and competitive leadership has shaped how I approach problem-solving and team collaboration.
+                Beyond development, I've <span className="text-white font-semibold">led esports teams</span> in national tournaments, managed competitive rosters, and built communities around gaming and strategy. This combination of <span className="text-white font-medium">technical expertise</span> and <span className="text-white font-medium">competitive leadership</span> has shaped how I approach problem-solving and team collaboration.
               </p>
               
               <p className="text-anim cursor-pointer">
-                Here, I share my projects, systems, and insights from building startups, esports analytics, and AI-powered tools. If you're building something ambitious, <a href="mailto:iabhijais@gmail.com" className="font-semibold text-transparent bg-clip-text bg-gradient-to-r from-fuchsia-400 to-cyan-300 hover:from-fuchsia-300 hover:to-cyan-200 transition-colors">let's connect</a>.
+                Here, I share my projects, systems, and insights from building startups, esports analytics, and AI-powered tools. <span className="block mt-3 text-[1.15rem]">If you're building something ambitious, <a href="mailto:iabhijais@gmail.com" className="font-bold text-transparent bg-clip-text bg-gradient-to-r from-fuchsia-400 via-purple-400 to-cyan-300 hover:from-fuchsia-300 hover:via-purple-300 hover:to-cyan-200 transition-all duration-300 underline decoration-fuchsia-400/40 hover:decoration-fuchsia-400/60">let's connect</a> →</span>
               </p>
             </div>
           </div>
