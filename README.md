@@ -14,24 +14,22 @@ Currently developing **GameGrid.gg**, an esports analytics platform that turns g
 
 ### 🧩 Featured Projects
 
-#### 🖥️ [Portfolio Website](https://hawkkeyed.vercel.app/)
-Clean, performance-optimized personal portfolio showcasing your projects, skills, and real-world demos.
+#### 🖥️ [Portfolio Website](https://iabhijais.vercel.app/)
+Modern, fast and clean personal portfolio showcasing your work, case studies and live projects.
 
-#### 🦅 Project HawkKeyed
+#### 🦅 [Project HawkKeyed](https://hawkkeyed.vercel.app/)
 AI-powered productivity & automation toolkit — smart workflows, utilities, and agentic AI experiments.  
-Built using Next.js, Firebase & TypeScript.  
-*(Private repo / Work in Progress)*
+Built using Next.js, Firebase, TypeScript. *(Work in Progress)*
 
-#### 🎮 [GameGrid.gg](https://game-grid-one.vercel.app)
+#### 🎮 [GameGrid.gg](https://game-grid-one.vercel.app/)
 Full-stack esports analytics platform — real-time dashboards, match insights & AI automation.  
 *(Work in Progress)*
 
-#### 💥 [ShellShock Counter](https://shell-counter.vercel.app)
+#### 💥 [ShellShock Counter](https://shell-counter.vercel.app/)
 Interactive PWA built with Next.js & TypeScript — strategy tracker with animations & real-time logic.
 
-#### 🧮 [CalcALL](https://github.com/iabhijais/CalcALL)
-Lightweight modular calculator built using vanilla JavaScript with responsive UI.
-
+#### 🧮 [CalcALL](https://calc-all.vercel.app/)
+Lightweight modular calculator built using vanilla JavaScript with a responsive UI.
 
 ---
 
