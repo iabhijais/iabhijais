@@ -1,0 +1,812 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Hide scrollbar for horizontal slider */
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+
+/* Fix scrollbar and white space issues - Single scrollbar only */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Force remove underlines from footer links */
+footer a,
+footer a span {
+  text-decoration: none !important;
+  border-bottom: none !important;
+  background-image: none !important;
+  background-size: 0 !important;
+}
+
+footer a:hover {
+  background-image: none !important;
+  background-size: 0 !important;
+}
+
+html {
+  overflow: hidden;
+  height: 100%;
+  width: 100%;
+  background-color: #000;
+}
+
+body {
+  overflow: hidden !important;
+  height: 100vh;
+  max-height: 100vh;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  background-color: #000;
+}
+
+#root {
+  width: 100%;
+  height: 100%;
+  max-height: 100vh;
+  overflow: hidden;
+  background-color: transparent;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ============================================================================
+   ANIMATIONS & KEYFRAMES
+   ============================================================================ */
+
+@keyframes glowPulse {
+  0% {
+    opacity: .55;
+    transform: scale(1);
+  }
+
+  50% {
+    opacity: .85;
+    transform: scale(1.05);
+  }
+
+  100% {
+    opacity: .55;
+    transform: scale(1);
+  }
+}
+
+@keyframes blink {
+
+  0%,
+  49% {
+    opacity: 1;
+  }
+
+  50%,
+  100% {
+    opacity: 0;
+  }
+}
+
+@keyframes glassShimmer {
+  0% {
+    transform: translateX(-150%) skewX(-25deg);
+  }
+
+  100% {
+    transform: translateX(150%) skewX(-25deg);
+  }
+}
+
+@keyframes sunrise {
+  0% {
+    transform: translateY(20px) scale(0.5) rotate(-180deg);
+    opacity: 0;
+  }
+
+  100% {
+    transform: translateY(0) scale(1) rotate(0deg);
+    opacity: 1;
+  }
+}
+
+@keyframes moonrise {
+  0% {
+    transform: translateY(-20px) scale(0.5) rotate(180deg);
+    opacity: 0;
+  }
+
+  100% {
+    transform: translateY(0) scale(1) rotate(0deg);
+    opacity: 1;
+  }
+}
+
+@keyframes electricPulse {
+
+  0%,
+  100% {
+    filter: brightness(1) saturate(1);
+    box-shadow:
+      0 0 10px rgba(168, 85, 247, 0.8),
+      0 0 20px rgba(168, 85, 247, 0.5),
+      0 0 30px rgba(192, 132, 252, 0.3);
+  }
+
+  50% {
+    filter: brightness(1.2) saturate(1.3);
+    box-shadow:
+      0 0 15px rgba(168, 85, 247, 0.9),
+      0 0 30px rgba(168, 85, 247, 0.7),
+      0 0 45px rgba(192, 132, 252, 0.5),
+      0 0 60px rgba(34, 211, 238, 0.4);
+  }
+}
+
+@keyframes electricShine {
+  0% {
+    transform: translateX(-100%);
+  }
+
+  100% {
+    transform: translateX(400%);
+  }
+}
+
+@keyframes electricSpark {
+
+  0%,
+  100% {
+    opacity: 0.5;
+    transform: scale(1);
+  }
+
+  50% {
+    opacity: 1;
+    transform: scale(1.2);
+  }
+}
+
+/* ============================================================================
+   UTILITY CLASSES - ANIMATIONS
+   ============================================================================ */
+
+.animate-glowPulse {
+  animation: glowPulse 6s ease-in-out infinite;
+}
+
+.animate-blink {
+  animation: blink 1s ease-in-out infinite;
+}
+
+.delay-300 {
+  animation-delay: .3s;
+}
+
+.delay-700 {
+  animation-delay: .7s;
+}
+
+/* ============================================================================
+   BUTTONS & INTERACTIVE ELEMENTS
+   ============================================================================ */
+
+.glow-outer {
+  box-shadow: 0 0 44px -12px rgba(168, 85, 247, 0.7);
+  transition: box-shadow .3s ease;
+}
+
+.group:hover .glow-outer {
+  box-shadow: 0 0 64px -8px rgba(168, 85, 247, 0.9);
+}
+
+.neon-btn-line::after {
+  content: '';
+  position: absolute;
+  bottom: -1px;
+  left: auto;
+  right: 0;
+  width: 0%;
+  height: 2px;
+  background: linear-gradient(90deg, #a855f7, #06b6d4);
+  transition: width 0.3s ease;
+  border-radius: 0 0 0 16px;
+}
+
+.group:hover .neon-btn-line::after {
+  width: 50%;
+}
+
+.sheen {
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.05), transparent);
+  width: 200%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: -50%;
+  transform: skewX(-25deg);
+  pointer-events: none;
+  animation: glassShimmer 3.5s infinite linear;
+}
+
+.group:hover .sheen {
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.12), transparent);
+  animation: glassShimmer 1.5s infinite linear;
+}
+
+/* ============================================================================
+   NAVIGATION STYLES
+   ============================================================================ */
+
+.nav-link-logo {
+  background: transparent;
+  transition: all 0.3s ease;
+}
+
+.nav-link-logo::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(168, 85, 247, 0.15) 0%, rgba(6, 182, 212, 0.15) 100%);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  border-radius: 8px;
+}
+
+.nav-link-logo:hover::before {
+  opacity: 1;
+}
+
+body.light-mode .nav-link-logo::before {
+  background: linear-gradient(135deg, rgba(192, 38, 211, 0.1) 0%, rgba(8, 145, 178, 0.1) 100%);
+}
+
+.nav-link-logo::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: auto;
+  width: 0%;
+  height: 2px;
+  background: #a855f7;
+  transition: width 0.3s ease, left 0.3s ease, right 0.3s ease;
+}
+
+.nav-link-logo:hover::after {
+  width: 100%;
+  left: 0;
+  right: auto;
+}
+
+.nav-link-logo:not(:hover)::after {
+  left: auto;
+  right: 0;
+}
+
+body.light-mode .nav-link-logo::after {
+  background: #c026d3;
+}
+
+.nav-link-tab {
+  background: transparent;
+  transition: all 0.3s ease;
+}
+
+.nav-link-tab::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(168, 85, 247, 0.15) 0%, rgba(6, 182, 212, 0.15) 100%);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  border-radius: 8px;
+}
+
+.nav-link-tab:hover::before {
+  opacity: 1;
+}
+
+body.light-mode .nav-link-tab::before {
+  background: linear-gradient(135deg, rgba(192, 38, 211, 0.1) 0%, rgba(8, 145, 178, 0.1) 100%);
+}
+
+.nav-link-tab::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: auto;
+  width: 0%;
+  height: 2px;
+  background: #a855f7;
+  transition: width 0.3s ease, left 0.3s ease, right 0.3s ease;
+}
+
+.nav-link-tab:hover::after {
+  width: 100%;
+  left: 0;
+  right: auto;
+}
+
+.nav-link-tab:not(:hover)::after {
+  left: auto;
+  right: 0;
+}
+
+body.light-mode .nav-link-tab::after {
+  background: #c026d3;
+}
+
+header button {
+  transition: transform .2s ease, background .2s ease, box-shadow .2s ease;
+}
+
+header button:hover {
+  transform: translateY(-1px);
+  background: rgba(255, 255, 255, .12);
+  box-shadow: 0 6px 24px -10px rgba(255, 255, 255, .35);
+}
+
+/* ============================================================================
+   THEME TOGGLE
+   ============================================================================ */
+
+.theme-toggle-btn {
+  position: relative;
+}
+
+.theme-icon {
+  display: inline-block;
+  transition: transform 0.5s ease, opacity 0.5s ease;
+}
+
+.theme-sun {
+  animation: sunrise 0.5s ease;
+}
+
+.theme-moon {
+  animation: moonrise 0.5s ease;
+}
+
+/* ============================================================================
+   CUSTOM CURSOR
+   ============================================================================ */
+
+/* Hide custom cursor on touch devices / mobile */
+@media (hover: none) and (pointer: coarse) {
+
+  .cursor-glow,
+  .cursor-dot {
+    display: none !important;
+    opacity: 0 !important;
+    visibility: hidden !important;
+  }
+}
+
+/* Also hide on smaller screens as backup */
+@media (max-width: 1024px) {
+
+  .cursor-glow,
+  .cursor-dot {
+    display: none !important;
+    opacity: 0 !important;
+    visibility: hidden !important;
+  }
+}
+
+.cursor-glow {
+  position: fixed;
+  width: 180px;
+  height: 180px;
+  border-radius: 50%;
+  pointer-events: none;
+  mix-blend-mode: screen;
+  filter: blur(50px);
+  left: 0;
+  top: 0;
+  will-change: transform;
+  contain: layout style;
+  opacity: .6;
+  z-index: 9998;
+}
+
+body.dark-mode .cursor-glow {
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.18) 0%, rgba(255, 255, 255, 0) 70%);
+}
+
+body.light-mode .cursor-glow {
+  background: radial-gradient(circle, rgba(0, 0, 0, 0.08) 0%, rgba(0, 0, 0, 0) 70%);
+  mix-blend-mode: multiply;
+}
+
+/* Hot states now handled via JS for better perf */
+
+.cursor-dot {
+  position: fixed;
+  width: 14px;
+  height: 14px;
+  border-radius: 9999px;
+  pointer-events: none;
+  left: 0;
+  top: 0;
+  will-change: transform;
+  contain: layout style;
+  transition: box-shadow .15s ease-out, transform .12s ease-out;
+  opacity: 1;
+  z-index: 9999;
+}
+
+body.dark-mode .cursor-dot {
+  background: rgba(255, 255, 255, 0.10);
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  box-shadow: inset 0 1px 2px rgba(255, 255, 255, 0.35), 0 8px 24px rgba(255, 255, 255, 0.12);
+}
+
+body.light-mode .cursor-dot {
+  background: rgba(0, 0, 0, 0.08);
+  border: 1px solid rgba(0, 0, 0, 0.25);
+  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.15), 0 4px 16px rgba(0, 0, 0, 0.15);
+}
+
+.cursor-dot::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  transition: background .3s ease;
+}
+
+body.dark-mode .cursor-dot::after {
+  background: radial-gradient(120% 120% at 30% 20%, rgba(255, 255, 255, .5) 0%, rgba(255, 255, 255, 0) 60%);
+}
+
+body.light-mode .cursor-dot::after {
+  background: radial-gradient(120% 120% at 30% 20%, rgba(0, 0, 0, .3) 0%, rgba(0, 0, 0, 0) 60%);
+}
+
+/* Hot states now handled via JS for better perf */
+
+.hide-native-cursor,
+.hide-native-cursor * {
+  cursor: none !important;
+}
+
+/* ============================================================================
+   TEXT EFFECTS
+   ============================================================================ */
+
+.text-anim {
+  position: relative;
+  background-image: linear-gradient(90deg, rgba(168, 85, 247, 0.22), rgba(59, 130, 246, 0.22));
+  background-repeat: no-repeat;
+  background-size: 0% 60%;
+  background-position: 0 88%;
+  transition: background-size .35s ease;
+  border-radius: 4px;
+  pointer-events: auto !important;
+}
+
+.text-anim:hover,
+.text-anim.hot-text {
+  background-size: 100% 60%;
+}
+
+a {
+  text-decoration: none;
+  background-image: linear-gradient(currentColor, currentColor);
+  background-position: 0 100%;
+  background-repeat: no-repeat;
+  background-size: 0% 2px;
+  transition: background-size .25s ease;
+}
+
+a:hover {
+  background-size: 100% 2px;
+}
+
+/* ============================================================================
+   CUSTOM SCROLLBAR
+   ============================================================================ */
+
+::-webkit-scrollbar {
+  width: 12px;
+  height: 12px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.1);
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, #a855f7, #e879f9);
+  border-radius: 10px;
+  border: 2px solid transparent;
+  background-clip: padding-box;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(180deg, #c084fc, #f0abfc);
+  border-radius: 10px;
+  border: 2px solid transparent;
+  background-clip: padding-box;
+}
+
+* {
+  scrollbar-width: thin;
+  scrollbar-color: #a855f7 rgba(0, 0, 0, 0.1);
+}
+
+/* ============================================================================
+   ELECTRIC PROGRESS BAR
+   ============================================================================ */
+
+.electric-progress {
+  background: linear-gradient(90deg,
+      #a855f7 0%,
+      #c084fc 25%,
+      #e879f9 50%,
+      #22d3ee 75%,
+      #06b6d4 100%);
+  box-shadow:
+    0 0 10px rgba(168, 85, 247, 0.8),
+    0 0 20px rgba(168, 85, 247, 0.6),
+    0 0 30px rgba(192, 132, 252, 0.4),
+    0 0 40px rgba(34, 211, 238, 0.3);
+  transition: width 0.05s linear;
+  position: relative;
+  animation: electricPulse 2s ease-in-out infinite;
+  will-change: width;
+}
+
+.electric-progress::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(90deg,
+      transparent 0%,
+      rgba(255, 255, 255, 0.4) 50%,
+      transparent 100%);
+  animation: electricShine 2.5s linear infinite;
+}
+
+.electric-progress::after {
+  content: '';
+  position: absolute;
+  top: -2px;
+  right: 0;
+  width: 20px;
+  height: 5px;
+  background: radial-gradient(ellipse at center,
+      #fff 0%,
+      #e879f9 30%,
+      #a855f7 60%,
+      transparent 100%);
+  filter: blur(3px);
+  animation: electricSpark 0.4s ease-in-out infinite;
+}
+
+/* Gradient Animation */
+@keyframes gradient-x {
+  0% {
+    background-position: 0% 50%;
+  }
+
+  50% {
+    background-position: 100% 50%;
+  }
+
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+.animate-gradient {
+  background-size: 200% auto;
+  animation: gradient-x 3s linear infinite;
+}
+
+/* ============================================================================
+   AMBIENT LIGHTING ANIMATIONS
+   ============================================================================ */
+
+@keyframes ambient1 {
+
+  0%,
+  100% {
+    transform: translate(0, 0) scale(1);
+    opacity: 1;
+  }
+
+  50% {
+    transform: translate(5%, 10%) scale(1.1);
+    opacity: 0.8;
+  }
+}
+
+@keyframes ambient2 {
+
+  0%,
+  100% {
+    transform: translate(0, 0) scale(1);
+    opacity: 1;
+  }
+
+  50% {
+    transform: translate(-8%, 5%) scale(1.15);
+    opacity: 0.7;
+  }
+}
+
+@keyframes ambient3 {
+
+  0%,
+  100% {
+    transform: translate(0, 0) scale(1);
+    opacity: 1;
+  }
+
+  33% {
+    transform: translate(10%, -5%) scale(1.05);
+    opacity: 0.9;
+  }
+
+  66% {
+    transform: translate(-5%, 8%) scale(0.95);
+    opacity: 0.8;
+  }
+}
+
+@keyframes ambient4 {
+
+  0%,
+  100% {
+    transform: translate(0, 0) scale(1);
+    opacity: 1;
+  }
+
+  50% {
+    transform: translate(8%, -8%) scale(1.1);
+    opacity: 0.85;
+  }
+}
+
+@keyframes ambient5 {
+
+  0%,
+  100% {
+    transform: translate(0, 0) scale(1);
+    opacity: 1;
+  }
+
+  50% {
+    transform: translate(-5%, -5%) scale(1.08);
+    opacity: 0.9;
+  }
+}
+
+.animate-ambient1 {
+  animation: ambient1 15s ease-in-out infinite;
+}
+
+.animate-ambient2 {
+  animation: ambient2 18s ease-in-out infinite;
+}
+
+.animate-ambient3 {
+  animation: ambient3 20s ease-in-out infinite;
+}
+
+.animate-ambient4 {
+  animation: ambient4 16s ease-in-out infinite;
+}
+
+.animate-ambient5 {
+  animation: ambient5 22s ease-in-out infinite;
+}
+
+/* ============================================================================
+   MOBILE & iPHONE 15 PRO MAX OPTIMIZATIONS
+   ============================================================================ */
+
+/* Safe area support for notch/dynamic island */
+@supports (padding: max(0px)) {
+  .safe-area-top {
+    padding-top: max(env(safe-area-inset-top), 0px);
+  }
+
+  .safe-area-bottom {
+    padding-bottom: max(env(safe-area-inset-bottom), 0px);
+  }
+}
+
+/* iPhone 15 Pro Max specific (430x932) */
+@media screen and (max-width: 430px) {
+
+  /* Optimize typography for mobile */
+  h1 {
+    font-size: clamp(2rem, 8vw, 2.5rem) !important;
+    line-height: 1.15 !important;
+  }
+
+  h2 {
+    font-size: clamp(1.25rem, 5vw, 1.75rem) !important;
+  }
+
+  /* Better touch targets */
+  button,
+  a {
+    min-height: 44px;
+  }
+
+  /* Optimize card slider for iPhone */
+  .snap-x>* {
+    scroll-snap-align: start;
+  }
+}
+
+/* General mobile optimizations */
+@media (max-width: 768px) {
+
+  /* Smooth momentum scrolling */
+  .overflow-x-auto {
+    -webkit-overflow-scrolling: touch;
+    scroll-behavior: smooth;
+  }
+
+  /* Prevent text selection on interactive elements */
+  button,
+  .cursor-pointer {
+    -webkit-user-select: none;
+    user-select: none;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  /* Optimize animations for mobile performance */
+  .animate-ambient1,
+  .animate-ambient2,
+  .animate-ambient3,
+  .animate-ambient4,
+  .animate-ambient5 {
+    animation-duration: 25s;
+  }
+
+  /* Reduce blur for better performance */
+  .backdrop-blur-xl {
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+  }
+}
+
+/* Touch device specific - remove hover states that cause sticky hover */
+@media (hover: none) {
+
+  .nav-link-tab::after,
+  .nav-link-logo::after {
+    display: none;
+  }
+
+  .nav-link-tab::before,
+  .nav-link-logo::before {
+    display: none;
+  }
+
+  /* Remove hover glow effects on touch */
+  .glow-outer {
+    box-shadow: 0 0 30px -12px rgba(168, 85, 247, 0.5);
+  }
+
+  .group:hover .glow-outer {
+    box-shadow: 0 0 30px -12px rgba(168, 85, 247, 0.5);
+  }
+}
