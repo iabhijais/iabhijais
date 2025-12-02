@@ -1,8 +1,37 @@
-import { useEffect, useId, useLayoutEffect, useRef } from 'react';
+import { useEffect, useId, useLayoutEffect, useRef, useState } from 'react';
 
 import './ElectricBorder.css';
 
+// Detect mobile/touch devices
+const isMobileDevice = () => {
+  if (typeof window === 'undefined') return false;
+  return (
+    'ontouchstart' in window ||
+    navigator.maxTouchPoints > 0 ||
+    window.innerWidth <= 768 ||
+    /iPad|iPhone|iPod|Android/i.test(navigator.userAgent)
+  );
+};
+
 const ElectricBorder = ({ children, color = '#5227FF', speed = 1, chaos = 1, thickness = 2, className, style }) => {
+  const [isMobile] = useState(isMobileDevice);
+  
+  // On mobile, just render children with a simple border
+  if (isMobile) {
+    return (
+      <div 
+        className={className} 
+        style={{ 
+          ...style, 
+          borderRadius: style?.borderRadius || 16,
+          border: `${thickness}px solid ${color}40`,
+          boxShadow: `0 0 20px ${color}20`
+        }}
+      >
+        {children}
+      </div>
+    );
+  }
   const rawId = useId().replace(/[:]/g, '');
   const filterId = `turbulent-displace-${rawId}`;
   const svgRef = useRef(null);
