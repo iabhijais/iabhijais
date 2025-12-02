@@ -213,7 +213,7 @@ export default function Layout() {
                                 { path: '/', label: 'Home', icon: '🏠', onClick: handleHomeClick },
                                 { path: '/projects', label: 'Projects', icon: '💡' },
                                 { path: '/gaming', label: 'Gaming', icon: '🎮' },
-                                { path: '/#about-section', label: 'About', icon: '👤', onClick: handleAboutClick },
+                                { path: '/#about-section', label: 'About', icon: 'logo', onClick: handleAboutClick },
                                 { path: '/hire-me', label: 'Hire Me', icon: '💼' },
                                 { path: '/resume', label: 'Resume', icon: '📄' }
                             ].map((link) => (
@@ -227,7 +227,11 @@ export default function Layout() {
                                     className={`flex items-center gap-3 py-3.5 px-4 rounded-xl active:scale-[0.98] ${isDark ? 'text-white active:bg-white/10' : 'text-gray-900 active:bg-gray-100'} ${location.pathname === link.path ? (isDark ? 'bg-white/10 border-l-2 border-purple-500' : 'bg-purple-50 border-l-2 border-purple-500') : ''}`}
                                     style={{ WebkitTapHighlightColor: 'transparent', touchAction: 'manipulation' }}
                                 >
-                                    <span className="text-xl">{link.icon}</span>
+                                    {link.icon === 'logo' ? (
+                                        <img src="/Logo.ico" alt="About" className="w-5 h-5 object-contain" />
+                                    ) : (
+                                        <span className="text-xl">{link.icon}</span>
+                                    )}
                                     <span className="font-semibold text-[15px]">{link.label}</span>
                                     {location.pathname === link.path && (
                                         <span className="ml-auto w-1.5 h-1.5 rounded-full bg-purple-500" />
