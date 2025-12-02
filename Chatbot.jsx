@@ -64,7 +64,7 @@ export default function Chatbot() {
   const { isDark } = useTheme();
   const [isOpen, setIsOpen] = useState(false);
   const [messages, setMessages] = useState([
-    { role: 'assistant', content: "Hey! I'm Abhishek AI ✨ Ask me anything about Abhishek's work, projects, or skills!" }
+    { role: 'assistant', content: "Hey! I'm Abhishek AI ✨\nAsk me anything about Abhishek's work, projects, or skills!" }
   ]);
   const [input, setInput] = useState('');
   const [isLoading, setIsLoading] = useState(false);
@@ -144,7 +144,7 @@ export default function Chatbot() {
     } catch (error) {
       setMessages(prev => [...prev, {
         role: 'assistant',
-        content: "Sorry, I'm having trouble connecting right now. Please try again or reach out to Abhishek directly at iabhijais@gmail.com 📧"
+        content: "Oops! Having trouble connecting right now 😅\nPlease try again or reach out to Abhishek directly at iabhijais@gmail.com 📧"
       }]);
     } finally {
       setIsLoading(false);

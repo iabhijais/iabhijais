@@ -1,33 +1,42 @@
 import React, { useEffect, useState, useRef } from 'react';
-import { Outlet, Link, useLocation, useNavigate } from 'react-router-dom';
-import { AnimatePresence, motion } from 'framer-motion';
-import { Menu, X } from 'lucide-react';
+import { Outlet, Link, useLocation } from 'react-router-dom';
 import { useTheme } from './ThemeContext';
 import Footer from './Footer';
+
+// Detect iOS
+const isIOS = typeof navigator !== 'undefined' && /iPad|iPhone|iPod/.test(navigator.userAgent);
 
 export default function Layout() {
     const { isDark, toggleTheme } = useTheme();
     const [scrollProgress, setScrollProgress] = useState(0);
     const location = useLocation();
-    const navigate = useNavigate();
     const scrollRef = useRef(null);
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
-    // Scroll Progress Logic
+    // Scroll Progress Logic - optimized for iOS
     useEffect(() => {
+        let ticking = false;
+        
         const handleScroll = () => {
-            if (scrollRef.current) {
-                const { scrollTop, scrollHeight, clientHeight } = scrollRef.current;
-                const totalHeight = scrollHeight - clientHeight;
-                const progress = totalHeight > 0 ? (scrollTop / totalHeight) * 100 : 0;
-                setScrollProgress(progress);
+            if (!ticking) {
+                requestAnimationFrame(() => {
+                    if (scrollRef.current) {
+                        const { scrollTop, scrollHeight, clientHeight } = scrollRef.current;
+                        const totalHeight = scrollHeight - clientHeight;
+                        const progress = totalHeight > 0 ? Math.min(100, Math.max(0, (scrollTop / totalHeight) * 100)) : 0;
+                        setScrollProgress(progress);
+                    }
+                    ticking = false;
+                });
+                ticking = true;
             }
         };
 
         const scrollContainer = scrollRef.current;
         if (scrollContainer) {
             scrollContainer.addEventListener('scroll', handleScroll, { passive: true });
-            handleScroll();
+            // Initial calculation
+            setTimeout(handleScroll, 100);
             return () => scrollContainer.removeEventListener('scroll', handleScroll);
         }
     }, [location.pathname]);
@@ -94,26 +103,21 @@ export default function Layout() {
                 />
             </div>
 
-            {/* Premium Ambient Lighting Effect - Dark Mode */}
+            {/* Premium Ambient Lighting Effect - Dark Mode (simplified for iOS) */}
             {isDark && (
-                <div className="pointer-events-none fixed inset-0 z-0 overflow-hidden">
-                    <div className="absolute -top-[20%] -left-[10%] w-[60vw] h-[60vh] rounded-full bg-purple-600/20 blur-[120px] animate-ambient1" />
-                    <div className="absolute -top-[10%] -right-[15%] w-[50vw] h-[50vh] rounded-full bg-cyan-500/15 blur-[100px] animate-ambient2" />
-                    <div className="absolute top-[30%] left-[20%] w-[40vw] h-[40vh] rounded-full bg-pink-500/10 blur-[80px] animate-ambient3" />
-                    <div className="absolute bottom-[10%] -left-[10%] w-[45vw] h-[45vh] rounded-full bg-blue-500/15 blur-[100px] animate-ambient4" />
-                    <div className="absolute -bottom-[15%] -right-[10%] w-[55vw] h-[55vh] rounded-full bg-emerald-500/12 blur-[120px] animate-ambient5" />
-                    <div className="absolute inset-0 opacity-[0.015]" style={{ backgroundImage: 'url("data:image/svg+xml,%3Csvg viewBox=\'0 0 256 256\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cfilter id=\'noise\'%3E%3CfeTurbulence type=\'fractalNoise\' baseFrequency=\'0.65\' numOctaves=\'3\' stitchTiles=\'stitch\'/%3E%3C/filter%3E%3Crect width=\'100%25\' height=\'100%25\' filter=\'url(%23noise)\'/%3E%3C/svg%3E")' }} />
+                <div className="pointer-events-none fixed inset-0 z-0 overflow-hidden will-change-auto">
+                    <div className={`absolute -top-[20%] -left-[10%] w-[60vw] h-[60vh] rounded-full bg-purple-600/15 blur-[100px] ${isIOS ? '' : 'animate-ambient1'}`} />
+                    <div className={`absolute -top-[10%] -right-[15%] w-[50vw] h-[50vh] rounded-full bg-cyan-500/12 blur-[80px] ${isIOS ? '' : 'animate-ambient2'}`} />
+                    <div className={`absolute bottom-[10%] -left-[10%] w-[45vw] h-[45vh] rounded-full bg-blue-500/12 blur-[80px] ${isIOS ? '' : 'animate-ambient4'}`} />
                 </div>
             )}
 
-            {/* Premium Ambient Lighting Effect - Light Mode */}
+            {/* Premium Ambient Lighting Effect - Light Mode (simplified for iOS) */}
             {!isDark && (
-                <div className="pointer-events-none fixed inset-0 z-0 overflow-hidden">
-                    <div className="absolute -top-[20%] -left-[10%] w-[60vw] h-[60vh] rounded-full bg-purple-300/30 blur-[120px] animate-ambient1" />
-                    <div className="absolute -top-[10%] -right-[15%] w-[50vw] h-[50vh] rounded-full bg-cyan-300/25 blur-[100px] animate-ambient2" />
-                    <div className="absolute top-[30%] left-[20%] w-[40vw] h-[40vh] rounded-full bg-pink-300/20 blur-[80px] animate-ambient3" />
-                    <div className="absolute bottom-[10%] -left-[10%] w-[45vw] h-[45vh] rounded-full bg-blue-300/25 blur-[100px] animate-ambient4" />
-                    <div className="absolute -bottom-[15%] -right-[10%] w-[55vw] h-[55vh] rounded-full bg-emerald-300/20 blur-[120px] animate-ambient5" />
+                <div className="pointer-events-none fixed inset-0 z-0 overflow-hidden will-change-auto">
+                    <div className={`absolute -top-[20%] -left-[10%] w-[60vw] h-[60vh] rounded-full bg-purple-300/25 blur-[100px] ${isIOS ? '' : 'animate-ambient1'}`} />
+                    <div className={`absolute -top-[10%] -right-[15%] w-[50vw] h-[50vh] rounded-full bg-cyan-300/20 blur-[80px] ${isIOS ? '' : 'animate-ambient2'}`} />
+                    <div className={`absolute bottom-[10%] -left-[10%] w-[45vw] h-[45vh] rounded-full bg-blue-300/20 blur-[80px] ${isIOS ? '' : 'animate-ambient4'}`} />
                 </div>
             )}
 
@@ -162,109 +166,78 @@ export default function Layout() {
                     <div className="flex items-center gap-4 md:hidden z-[60]">
                         <button
                             onClick={toggleTheme}
-                            className={`theme-toggle-btn w-9 h-9 rounded-full ${isDark ? 'bg-white/5 border-white/10' : 'bg-gray-200 border-gray-300'} border text-lg flex items-center justify-center transition-all duration-300`}
+                            className={`theme-toggle-btn w-9 h-9 rounded-full ${isDark ? 'bg-white/5 border-white/10' : 'bg-gray-200 border-gray-300'} border text-lg flex items-center justify-center active:scale-95`}
+                            style={{ WebkitTapHighlightColor: 'transparent', touchAction: 'manipulation' }}
                         >
                             <span className={`theme-icon ${isDark ? 'theme-sun' : 'theme-moon'}`}>
                                 {isDark ? '☀️' : '🌙'}
                             </span>
                         </button>
                         <button
-                            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-                            className={`w-10 h-10 flex flex-col justify-center items-center gap-1.5 rounded-lg ${isDark ? 'hover:bg-white/10' : 'hover:bg-gray-100'} transition-colors`}
+                            onClick={() => setIsMobileMenuOpen(prev => !prev)}
+                            onTouchEnd={(e) => { e.preventDefault(); setIsMobileMenuOpen(prev => !prev); }}
+                            className={`w-12 h-12 flex flex-col justify-center items-center gap-1.5 rounded-lg ${isDark ? 'active:bg-white/20' : 'active:bg-gray-200'}`}
                             aria-label="Toggle Menu"
+                            style={{ WebkitTapHighlightColor: 'transparent', touchAction: 'manipulation' }}
                         >
-                            <motion.span
-                                animate={isMobileMenuOpen ? { rotate: 45, y: 8 } : { rotate: 0, y: 0 }}
-                                transition={{ type: "spring", stiffness: 260, damping: 20 }}
-                                className={`w-6 h-0.5 block rounded-full transition-colors ${isDark ? 'bg-white' : 'bg-gray-900'}`}
-                            />
-                            <motion.span
-                                animate={isMobileMenuOpen ? { opacity: 0, x: -20 } : { opacity: 1, x: 0 }}
-                                transition={{ duration: 0.2 }}
-                                className={`w-6 h-0.5 block rounded-full transition-colors ${isDark ? 'bg-white' : 'bg-gray-900'}`}
-                            />
-                            <motion.span
-                                animate={isMobileMenuOpen ? { rotate: -45, y: -8 } : { rotate: 0, y: 0 }}
-                                transition={{ type: "spring", stiffness: 260, damping: 20 }}
-                                className={`w-6 h-0.5 block rounded-full transition-colors ${isDark ? 'bg-white' : 'bg-gray-900'}`}
-                            />
+                            <span className={`w-6 h-0.5 block rounded-full ${isDark ? 'bg-white' : 'bg-gray-900'} transition-transform duration-200 ${isMobileMenuOpen ? 'rotate-45 translate-y-2' : ''}`} />
+                            <span className={`w-6 h-0.5 block rounded-full ${isDark ? 'bg-white' : 'bg-gray-900'} transition-opacity duration-200 ${isMobileMenuOpen ? 'opacity-0' : ''}`} />
+                            <span className={`w-6 h-0.5 block rounded-full ${isDark ? 'bg-white' : 'bg-gray-900'} transition-transform duration-200 ${isMobileMenuOpen ? '-rotate-45 -translate-y-2' : ''}`} />
                         </button>
                     </div>
                 </div>
             </header>
 
             {/* Mobile Menu - Right Side Slider */}
-            <AnimatePresence>
-                {isMobileMenuOpen && (
-                    <>
-                        {/* Backdrop */}
-                        <motion.div
-                            initial={{ opacity: 0 }}
-                            animate={{ opacity: 1 }}
-                            exit={{ opacity: 0 }}
-                            transition={{ duration: 0.2 }}
-                            onClick={() => setIsMobileMenuOpen(false)}
-                            className="fixed inset-0 z-[45] bg-black/50 backdrop-blur-sm md:hidden"
-                        />
+            {isMobileMenuOpen && (
+                <>
+                    {/* Backdrop */}
+                    <div
+                        onClick={() => setIsMobileMenuOpen(false)}
+                        className="fixed inset-0 z-[45] bg-black/50 md:hidden"
+                        style={{ WebkitTapHighlightColor: 'transparent' }}
+                    />
 
-                        {/* Slide-in Menu from Right - Premium Glass */}
-                        <motion.div
-                            initial={{ x: '100%' }}
-                            animate={{ x: 0 }}
-                            exit={{ x: '100%' }}
-                            transition={{ type: 'spring', damping: 25, stiffness: 250 }}
-                            className="fixed right-0 w-[280px] z-[46] md:hidden overflow-hidden"
-                            style={{
-                                top: 'calc(3.5rem + env(safe-area-inset-top, 0px))',
-                                height: 'calc(100% - 3.5rem - env(safe-area-inset-top, 0px))'
-                            }}
-                        >
-                            {/* Glass background layers */}
-                            <div className={`absolute inset-0 ${isDark ? 'bg-black/40' : 'bg-white/40'}`} />
-                            <div className={`absolute inset-0 backdrop-blur-2xl`} />
-                            <div className={`absolute inset-0 ${isDark ? 'bg-gradient-to-b from-purple-500/10 via-transparent to-cyan-500/10' : 'bg-gradient-to-b from-purple-100/50 via-transparent to-cyan-100/50'}`} />
-                            <div className={`absolute inset-y-0 left-0 w-px ${isDark ? 'bg-gradient-to-b from-purple-500/50 via-white/20 to-cyan-500/50' : 'bg-gradient-to-b from-purple-300 via-gray-200 to-cyan-300'}`} />
-
-                            {/* Top shine */}
-                            <div className={`absolute top-0 left-0 right-0 h-px ${isDark ? 'bg-gradient-to-r from-transparent via-white/20 to-transparent' : 'bg-gradient-to-r from-transparent via-purple-300/50 to-transparent'}`} />
-
-                            {/* Menu Items */}
-                            <nav className="relative px-4 py-4 flex flex-col gap-2">
-                                {[
-                                    { path: '/', label: 'Home', icon: '🏠', onClick: handleHomeClick },
-                                    { path: '/projects', label: 'Projects', icon: '💡' },
-                                    { path: '/gaming', label: 'Gaming', icon: '🎮' },
-                                    { path: '/#about-section', label: 'About', icon: <img src="/Logo.ico" alt="About" className="w-5 h-5 object-contain" />, onClick: handleAboutClick },
-                                    { path: '/hire-me', label: 'Hire Me', icon: '💼' },
-                                    { path: '/resume', label: 'Resume', icon: '📄' }
-                                ].map((link, index) => (
-                                    <motion.div
-                                        key={link.path}
-                                        initial={{ opacity: 0, x: 30 }}
-                                        animate={{ opacity: 1, x: 0 }}
-                                        transition={{ delay: 0.1 + index * 0.05 }}
-                                    >
-                                        <Link
-                                            to={link.path}
-                                            onClick={(e) => {
-                                                if (link.onClick) link.onClick(e);
-                                                setIsMobileMenuOpen(false);
-                                            }}
-                                            className={`flex items-center gap-3 py-3.5 px-4 rounded-xl transition-all duration-300 ${isDark ? 'text-white hover:bg-white/10 hover:shadow-[0_0_20px_rgba(168,85,247,0.15)]' : 'text-gray-900 hover:bg-white/50 hover:shadow-md'} ${location.pathname === link.path ? (isDark ? 'bg-white/10 border-l-2 border-purple-500 shadow-[0_0_15px_rgba(168,85,247,0.2)]' : 'bg-white/60 border-l-2 border-purple-500 shadow-sm') : ''}`}
-                                        >
-                                            <span className="text-xl">{link.icon}</span>
-                                            <span className="font-semibold text-[15px]">{link.label}</span>
-                                            {location.pathname === link.path && (
-                                                <span className="ml-auto w-1.5 h-1.5 rounded-full bg-purple-500 shadow-[0_0_8px_rgba(168,85,247,0.6)]" />
-                                            )}
-                                        </Link>
-                                    </motion.div>
-                                ))}
-                            </nav>
-                        </motion.div>
-                    </>
-                )}
-            </AnimatePresence>
+                    {/* Slide-in Menu from Right */}
+                    <div
+                        className={`fixed right-0 w-[280px] z-[46] md:hidden overflow-hidden transform transition-transform duration-200 ${isDark ? 'bg-gray-900/95' : 'bg-white/95'} backdrop-blur-xl`}
+                        style={{
+                            top: 'calc(3.5rem + env(safe-area-inset-top, 0px))',
+                            height: 'calc(100% - 3.5rem - env(safe-area-inset-top, 0px))',
+                            borderLeft: isDark ? '1px solid rgba(255,255,255,0.1)' : '1px solid rgba(0,0,0,0.1)'
+                        }}
+                    >
+                        {/* Menu Items */}
+                        <nav className="relative px-4 py-4 flex flex-col gap-2">
+                            {[
+                                { path: '/', label: 'Home', icon: '🏠', onClick: handleHomeClick },
+                                { path: '/projects', label: 'Projects', icon: '💡' },
+                                { path: '/gaming', label: 'Gaming', icon: '🎮' },
+                                { path: '/#about-section', label: 'About', icon: '👤', onClick: handleAboutClick },
+                                { path: '/hire-me', label: 'Hire Me', icon: '💼' },
+                                { path: '/resume', label: 'Resume', icon: '📄' }
+                            ].map((link) => (
+                                <Link
+                                    key={link.path}
+                                    to={link.path}
+                                    onClick={(e) => {
+                                        if (link.onClick) link.onClick(e);
+                                        setIsMobileMenuOpen(false);
+                                    }}
+                                    className={`flex items-center gap-3 py-3.5 px-4 rounded-xl active:scale-[0.98] ${isDark ? 'text-white active:bg-white/10' : 'text-gray-900 active:bg-gray-100'} ${location.pathname === link.path ? (isDark ? 'bg-white/10 border-l-2 border-purple-500' : 'bg-purple-50 border-l-2 border-purple-500') : ''}`}
+                                    style={{ WebkitTapHighlightColor: 'transparent', touchAction: 'manipulation' }}
+                                >
+                                    <span className="text-xl">{link.icon}</span>
+                                    <span className="font-semibold text-[15px]">{link.label}</span>
+                                    {location.pathname === link.path && (
+                                        <span className="ml-auto w-1.5 h-1.5 rounded-full bg-purple-500" />
+                                    )}
+                                </Link>
+                            ))}
+                        </nav>
+                    </div>
+                </>
+            )}
 
             {/* Page Content */}
             <Outlet />

@@ -810,3 +810,39 @@ a:hover {
     box-shadow: 0 0 30px -12px rgba(168, 85, 247, 0.5);
   }
 }
+
+/* iOS specific optimizations */
+@supports (-webkit-touch-callout: none) {
+  /* Disable heavy animations on iOS */
+  .animate-ambient1,
+  .animate-ambient2,
+  .animate-ambient3,
+  .animate-ambient4,
+  .animate-ambient5 {
+    animation: none !important;
+  }
+  
+  /* Reduce blur for better performance */
+  .blur-\[100px\],
+  .blur-\[120px\],
+  .blur-\[140px\],
+  .blur-\[150px\],
+  .blur-\[160px\],
+  .blur-\[170px\],
+  .blur-\[180px\] {
+    filter: blur(60px) !important;
+  }
+  
+  /* Optimize backdrop blur */
+  .backdrop-blur-xl,
+  .backdrop-blur-2xl {
+    -webkit-backdrop-filter: blur(12px);
+    backdrop-filter: blur(12px);
+  }
+  
+  /* Better touch response */
+  button, a {
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
+  }
+}
